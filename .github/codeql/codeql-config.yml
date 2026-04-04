@@ -1,0 +1,11 @@
+name: "Local CodeQL example"
+
+queries:
+  - uses: security-and-quality
+  - uses: ./.github/codeql/queries/js
+
+paths:
+  - examples/codeql-demo
+
+paths-ignore:
+  - "**/*.tf"
