@@ -1,0 +1,11 @@
+title = "Local gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Ignore git metadata and the CodeQL demo example"
+paths = [
+  '''^\.git/''',
+  '''^examples/codeql-demo/'''
+]
