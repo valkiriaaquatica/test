@@ -202,3 +202,42 @@ Si luego quieres dejar la action activa sin que falle siempre, tienes dos opcion
 
 - borrar `examples/gitleaks-demo/fake-secrets.env`
 - excluir esa ruta en `.gitleaks.toml`
+
+## Super-Linter en este repo
+
+El repo ahora tambien tiene una workflow de `super-linter` en `.github/workflows/super-linter.yml`.
+
+Su funcion no es buscar vulnerabilidades ni secretos. Su trabajo es revisar estilo, formato y errores basicos de lint en varios tipos de archivo del repo.
+
+En este caso esta configurado para revisar:
+
+- JavaScript
+- Markdown
+- Terraform
+- YAML
+
+La diferencia rapida entre las tres herramientas queda asi:
+
+- `CodeQL`: busca patrones inseguros o problemas de seguridad en el codigo.
+- `gitleaks`: busca secretos expuestos en archivos o historial git.
+- `super-linter`: revisa formato, convenciones y errores de lint.
+
+La workflow de `super-linter` hace esto:
+
+1. clona el repo
+2. ejecuta `super-linter/super-linter@v7`
+3. revisa todo el codigo con `VALIDATE_ALL_CODEBASE: true`
+4. falla si encuentra errores de lint o formato
+
+En este repo resulta util porque tienes varios tipos de archivo mezclados:
+
+- `*.tf`
+- `*.yml`
+- `*.md`
+- el ejemplo `*.js`
+
+Asi puedes ver claramente que cada action cubre una capa distinta:
+
+- calidad y formato con `super-linter`
+- secretos con `gitleaks`
+- seguridad semantica con `CodeQL`
